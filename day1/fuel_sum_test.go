@@ -15,6 +15,15 @@ func TestCalculateFuel(t *testing.T) {
 	}
 }
 
+func TestCalculateFuelRecurse(t *testing.T) {
+	got := CalculateFuelRecurse(100756)
+	want := 50346
+
+	if got != want {
+		t.Errorf("got %d, want %d", got, want)
+	}
+}
+
 func TestReadMasses(t *testing.T) {
 	massData := []string{"1", "2", "34", "456", "7890"}
 	massReader := strings.NewReader(strings.Join(massData, "\n"))
@@ -39,8 +48,18 @@ func TestSumInts(t *testing.T) {
 
 func TestSumFuelReqs(t *testing.T) {
 	masses := []int{12, 14, 1969, 100756}
-	got := SumFuelReqs(masses)
+	got := SumFuelReqs(masses, CalculateFuel)
 	want := 34241
+
+	if got != want {
+		t.Errorf("got %d, want %d", got, want)
+	}
+}
+
+func TestSumFuelReqsRecursive(t *testing.T) {
+	masses := []int{14, 1969, 100756}
+	got := SumFuelReqs(masses, CalculateFuelRecurse)
+	want := 51314
 
 	if got != want {
 		t.Errorf("got %d, want %d", got, want)
